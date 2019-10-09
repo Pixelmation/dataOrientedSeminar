@@ -162,53 +162,85 @@ void CreateSphere(double R, double H, double K, double Z, int offset) {
 	n = 0;
 	const int space = 30;
 
+	int offN;
+
 	// draw the front half
 	for (b = 0; b <= 90 - space; b += space){
 		for (a = 0; a <= 360 - space; a += space){
 
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b) / 180 * PI) - Z;
+			offN = n + offset;
+			points[offN].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
+			points[offN].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
+			points[offN].z = R * cos((b) / 180 * PI) - Z;
 			n++;
 
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b + space) / 180 * PI) - Z;
+			offN = n + offset;
+			points[offN].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+			points[offN].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+			points[offN].z = R * cos((b + space) / 180 * PI) - Z;
 			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b) / 180 * PI) - Z;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
+			points[offN].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
+			points[offN].z = R * cos((b) / 180 * PI) - Z;
 			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b + space) / 180 * PI) - Z;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+			points[offN].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+			points[offN].z = R * cos((b + space) / 180 * PI) - Z;
+			n++;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
+			points[offN].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
+			points[offN].z = -1 * (R * cos((b) / 180 * PI)) - Z;
+			n++;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+			points[offN].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+			points[offN].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
+			n++;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
+			points[offN].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
+			points[offN].z = -1 * (R * cos((b) / 180 * PI)) - Z;
+			n++;
+
+			offN = n + offset;
+			points[offN].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+			points[offN].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+			points[offN].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
 			n++;
 		}
 	}
 
 	// draw the back half
-	for (b = 0; b <= 90 - space; b += space){
-		for (a = 0; a <= 360 - space; a += space){
-
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
-			n++;
-
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
-			n++;
-		}
-	}
+	//for (b = 0; b <= 90 - space; b += space){
+	//	for (a = 0; a <= 360 - space; a += space){
+	//
+	//		points[n + offset].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
+	//		points[n + offset].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
+	//		points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
+	//		n++;
+	//
+	//		points[n + offset].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+	//		points[n + offset].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+	//		points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
+	//		n++;
+	//		points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
+	//		points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
+	//		points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
+	//		n++;
+	//		points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
+	//		points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
+	//		points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
+	//		n++;
+	//	}
+	//}
 
 }
 
