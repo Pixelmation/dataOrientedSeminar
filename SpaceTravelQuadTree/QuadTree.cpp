@@ -104,7 +104,7 @@ void QuadtreeNode::drawAsteroids(float x1, float z1, float x2, float z2,
 	     SWChild->drawAsteroids(x1, z1, x2, z2, x3, z3, x4, z4); 
 		 NWChild->drawAsteroids(x1, z1, x2, z2, x3, z3, x4, z4); 
 		 NEChild->drawAsteroids(x1, z1, x2, z2, x3, z3, x4, z4); 
-		 SEChild->drawAsteroids(x1, z1, x2, z2, x3, z3, x4, z4);
+		 SEChild->drawAsteroids(x1, z1, x2, z2, x3, z3, x4, z4); 
 	  }
    }
 }
