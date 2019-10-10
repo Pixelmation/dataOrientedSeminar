@@ -21,8 +21,8 @@ int QuadtreeNode::numberAsteroidsIntersected()
 {
    int numVal = 0;
    int i, j;
-   for (j=0; j<cols; j++)
-      for (i=0; i<rows; i++)
+   for (i=0; i<rows; i++)
+	for (j=0; j<cols; j++)
 	     if (arrayAsteroids[i][j].getRadius() > 0.0) 
 	        if ( checkDiscRectangleIntersection( SWCornerX, SWCornerZ, SWCornerX+size, SWCornerZ-size,
                  arrayAsteroids[i][j].getCenterX(), arrayAsteroids[i][j].getCenterZ(), 
@@ -36,8 +36,8 @@ int QuadtreeNode::numberAsteroidsIntersected()
 void QuadtreeNode::addIntersectingAsteroidsToList()
 {
    int i, j;
-   for (j=0; j<cols; j++)
-      for (i=0; i<rows; i++)
+   for (i=0; i<rows; i++)
+	for (j=0; j<cols; j++)
 	     if (arrayAsteroids[i][j].getRadius() > 0.0) 
 	        if ( checkDiscRectangleIntersection( SWCornerX, SWCornerZ, SWCornerX+size, SWCornerZ-size, 
 				 arrayAsteroids[i][j].getCenterX(), arrayAsteroids[i][j].getCenterZ(), 

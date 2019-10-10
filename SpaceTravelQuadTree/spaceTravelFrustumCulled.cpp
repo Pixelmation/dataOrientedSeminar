@@ -162,54 +162,91 @@ void CreateSphere(double R, double H, double K, double Z, int offset) {
 	n = 0;
 	const int space = 30;
 
+
+	//the constant of 180/ PI, to avoidcomputing floating point math a bunch
+	double divConst = 180 / PI;
+
+	//draw the asteroids
+	for (b = 0; b <= 90 - space; b += space) {
+		for (a = 0; a <= 360 - space; a += space) {
+
+			//the front halves
+			points[n + offset].x = R * sin((a) / 180 / PI) * sin((b) / 180 / PI) - H;
+			points[n + offset].y = R * cos((a) / 180 / PI) * sin((b) / 180 / PI) + K;
+			points[n + offset].z = R * cos((b) / 180 / PI) - Z;
+			n++;
+
+			points[n + offset].x = R * sin((a) / 180 / PI) * sin((b + space) / 180 / PI) - H;
+			points[n + offset].y = R * cos((a) / 180 / PI) * sin((b + space) / 180 / PI) + K;
+			points[n + offset].z = R * cos((b + space) / 180 / PI) - Z;
+			n++;
+			points[n + offset].x = R * sin((a + space) / 180 / PI) * sin((b) / 180 / PI) - H;
+			points[n + offset].y = R * cos((a + space) / 180 / PI) * sin((b) / 180 / PI) + K;
+			points[n + offset].z = R * cos((b) / 180 / PI) - Z;
+			n++;
+			points[n + offset].x = R * sin((a + space) / 180 / PI) * sin((b + space) / 180 / PI) - H;
+			points[n + offset].y = R * cos((a + space) / 180 / PI) * sin((b + space) / 180 / PI) + K;
+			points[n + offset].z = R * cos((b + space) / 180 / PI) - Z;
+			n++;
+
+			//loop to create the back halves
+			for (int i = 0; i < 4; i++)
+			{
+				points[n + offset].x = points[n + offset - 4].x;
+				points[n + offset].y = points[n + offset - 4].y;
+				points[n + offset].z = -1 * points[n + offset - 4].z;
+				n++;
+			}
+		}
+	}
+
+	//********This commented out version seems to somehow change the asteroids, and I cant figure out why.
+	//It should be the same math, but the points somehow change spots. ***********************************
+
+	/*
 	// draw the front half
 	for (b = 0; b <= 90 - space; b += space){
 		for (a = 0; a <= 360 - space; a += space){
+			//set up a few sin and cosine values that will be repeated several times
+			double sinA = sin(a / divConst);
+			double sinB = sin(b / divConst);
+			double sinSpaceA = sin(a + space / divConst);
+			double sinSpaceB = sin(b + space / divConst);
+			double cosA = cos(a / divConst);
+			double cosB = cos(b / divConst);
+			double cosSpaceA = cos(a + space / divConst);
+			double cosSpaceB = cos(b + space / divConst);
 
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b) / 180 * PI) - Z;
+
+			points[n + offset].x = R * sinA * sinB - H;
+			points[n + offset].y = R * cosA * sinB + K;
+			points[n + offset].z = R * cosB - Z;
+			n++;
+			points[n + offset].x = R * sinA * sinSpaceB - H;
+			points[n + offset].y = R * cosA * sinSpaceB + K;
+			points[n + offset].z = R * cosSpaceB - Z;
+			n++;
+			points[n + offset].x = R * sinSpaceA * sinB - H;
+			points[n + offset].y = R * cosSpaceA * sinB + K;
+			points[n + offset].z = R * cosB - Z;
+			n++;
+			points[n + offset].x = R * sinSpaceA * sinSpaceB - H;
+			points[n + offset].y = R * cosSpaceA * sinSpaceB + K;
+			points[n + offset].z = R * cosSpaceB - Z;
 			n++;
 
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b + space) / 180 * PI) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b) / 180 * PI) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = R * cos((b + space) / 180 * PI) - Z;
-			n++;
+			//loop to create the back half
+			for (int i = 0; i < 4; i++)
+			{
+				points[n + offset].x = points[n + offset -4].x;
+				points[n + offset].y = points[n + offset - 4].y;
+				points[n + offset].z = -1 * points[n + offset - 4].z;
+				n++;
+			}
+
 		}
 	}
-
-	// draw the back half
-	for (b = 0; b <= 90 - space; b += space){
-		for (a = 0; a <= 360 - space; a += space){
-
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
-			n++;
-
-			points[n + offset].x = R * sin((a) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b) / 180 * PI)) - Z;
-			n++;
-			points[n + offset].x = R * sin((a + space) / 180 * PI) * sin((b + space) / 180 * PI) - H;
-			points[n + offset].y = R * cos((a + space) / 180 * PI) * sin((b + space) / 180 * PI) + K;
-			points[n + offset].z = -1 * (R * cos((b + space) / 180 * PI)) - Z;
-			n++;
-		}
-	}
-
+	*/
 }
 
 
@@ -258,8 +295,8 @@ void setup(void)
    // create where the spheres are going in the field   
    int index = sphere_index;
    // Initialize global arrayAsteroids.
-   for (j=0; j<COLUMNS; j++)
-      for (i=0; i<ROWS; i++)
+   for (i=0; i<ROWS; i++)
+	for (j=0; j<COLUMNS; j++)
 		  if (rand() % 100 < FILL_PROBABILITY)
 			  // If rand()%100 >= FILL_PROBABILITY the default constructor asteroid remains in the slot which
 			  // indicates that there is no asteroid there because the default's radius is 0.
@@ -338,8 +375,8 @@ int asteroidCraftCollision( float x, float z, float a)
    int i,j;
 
    // Check for collision with each asteroid.
-   for (j=0; j<COLUMNS; j++)
-      for (i=0; i<ROWS; i++)
+   for (i=0; i<ROWS; i++)
+	for (j=0; j<COLUMNS; j++)
 		 if (arrayAsteroids[i][j].getRadius() > 0 ) // If asteroid exists.
             if ( checkSpheresIntersection( x - 5 * sin( (PI/180.0) * a), 0.0, 
 		         z - 5 * cos( (PI/180.0) * a), 7.072, 
@@ -446,8 +483,8 @@ void drawScene(void)
    if (!isFrustumCulled)
    {
 	   // Draw all the asteroids in arrayAsteroids.
-	   for (j = 0; j<COLUMNS; j++)
-         for (i=0; i<ROWS; i++)
+       for (i=0; i<ROWS; i++)
+		for (j = 0; j<COLUMNS; j++)
 		   arrayAsteroids[i][j].draw();
    }
    else
@@ -520,8 +557,8 @@ void drawScene(void)
    if (!isFrustumCulled)
    {
 	   // Draw all the asteroids in arrayAsteroids.
-	   for (j = 0; j<COLUMNS; j++)
-         for (i=0; i<ROWS; i++)
+       for (i=0; i<ROWS; i++)
+		for (j = 0; j<COLUMNS; j++)
             arrayAsteroids[i][j].draw();
    }
    else
